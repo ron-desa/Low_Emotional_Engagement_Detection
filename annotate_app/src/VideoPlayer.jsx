@@ -88,7 +88,7 @@ export default function VideoPlayer() {
     // comment below line if it breaks
     stopRecording()
     
-    downloadVideo(mediaBlobUrl)
+    // downloadVideo(mediaBlobUrl)
 
     // console.log("ENDED");
     setPlayingID((playingID + 1) % orderedList.length);
