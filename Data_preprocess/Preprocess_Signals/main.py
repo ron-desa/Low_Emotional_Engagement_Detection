@@ -552,18 +552,18 @@ if __name__ == "__main__":
 
     ensure_directories()
     # ids = list(range(1,37)) + list(range(55,61))
-    ids = list(range(1,5))
-    P_id = list(range(1,5))
+    ids = list(range(1,16))
+    P_id = list(range(1,16))
     # P_id = list(range(1,43))
     video_id = list(range(1,9))
 
     signal_preprocessing (ids, video_id)
-    signals_normalization(ids, video_id)
-    extract_features(ids, video_id)
-    add_normalized_score(ids,video_id)
-    annotate_window (ids, video_id)
-    concat_all_data(P_id, video_id)
-    add_prevwindow(P_id, video_id)
+    # signals_normalization(ids, video_id)
+    # extract_features(ids, video_id)
+    # add_normalized_score(ids,video_id)
+    # annotate_window (ids, video_id)
+    # concat_all_data(P_id, video_id)
+    # add_prevwindow(P_id, video_id)
 
 
 
