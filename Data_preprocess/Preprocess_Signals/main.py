@@ -557,13 +557,13 @@ if __name__ == "__main__":
     # P_id = list(range(1,43))
     video_id = list(range(1,9))
 
-    signal_preprocessing (ids, video_id)
+    # signal_preprocessing (ids, video_id)
     # signals_normalization(ids, video_id)
-    # extract_features(ids, video_id)
-    # add_normalized_score(ids,video_id)
-    # annotate_window (ids, video_id)
-    # concat_all_data(P_id, video_id)
-    # add_prevwindow(P_id, video_id)
+    extract_features(ids, video_id)
+    add_normalized_score(ids,video_id)
+    annotate_window (ids, video_id)
+    concat_all_data(P_id, video_id)
+    add_prevwindow(P_id, video_id)
 
 
 
