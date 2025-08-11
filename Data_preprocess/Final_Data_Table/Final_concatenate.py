@@ -8,7 +8,7 @@ filename_pattern = "merged_output{}.csv"
 out_dir="/home/rounak/CODE/Low_Engagement_Detection/Data_preprocess/Final_Data_Table"
 
 # Define how many files you expect or use os.listdir() for auto-detection
-max_pid = 4  # or change this to a large number to scan dynamically
+max_pid = 15  # or change this to a large number to scan dynamically
 
 dataframes = []
 
@@ -29,7 +29,7 @@ for pid in range(1, max_pid + 1):
 # Concatenate all
 if dataframes:
     merged_df = pd.concat(dataframes, ignore_index=True)
-    output_path = os.path.join(out_dir, "merged_all.csv")
+    output_path = os.path.join(out_dir, f"merged_all_1_to_{max_pid}.csv")
     merged_df.to_csv(output_path, index=False)
     print(f"Merged CSV saved to {output_path}")
 else:
