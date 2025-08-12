@@ -1,8 +1,8 @@
 import pandas as pd
 import os
-
+user_name="sudhamsu"
 # File paths
-input_file = '/home/rounak/CODE/Low_Engagement_Detection/annotate_app/Annotations/akshay.csv'
+input_file = f"/home/rounak/CODE/Low_Engagement_Detection/annotate_app/Annotations/{user_name}.csv"
 output_dir = '/home/rounak/CODE/Low_Engagement_Detection/Data_preprocess/Preprocess_Signals/raw_data/Annotations'
 
 # Get user input for the file name number
