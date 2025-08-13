@@ -135,7 +135,7 @@ def signals_normalization(ids, video_id):
 
         # Convert to DataFrame and save as CSV
         dataset_normalized = pd.DataFrame(dict_data)
-        output_dir = "2_Normalized_data"
+        output_dir = "/home/rounak/CODE/Low_Engagement_Detection/Data_preprocess/Preprocess_Signals/2_Normalized_data"
         os.makedirs(output_dir, exist_ok=True)
         output_file = os.path.join(output_dir, f"{p_id}.normalized.csv")
 
@@ -557,8 +557,8 @@ if __name__ == "__main__":
     # P_id = list(range(1,43))
     video_id = list(range(1,9))
 
-    signal_preprocessing (ids, video_id)
-    # signals_normalization(ids, video_id)
+    # signal_preprocessing (ids, video_id)
+    signals_normalization(ids, video_id)
     # extract_features(ids, video_id)
     # add_normalized_score(ids,video_id)
     # annotate_window (ids, video_id)
