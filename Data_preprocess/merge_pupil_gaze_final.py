@@ -5,7 +5,9 @@ from pathlib import Path
 # -----------------------------
 # CONFIGURATION
 # -----------------------------
-DATA_DIR = Path("/mnt/data1/HCI WORK/Low Engagement Detection/Pupil Recordings/User_15_recording/001")
+# DATA_DIR = Path("/mnt/data1/HCI WORK/Low Engagement Detection/Pupil Recordings/User_26_recording/001")
+DATA_DIR = Path("/mnt/data2/HCI/User_32_recording/000")
+
 GAZE_PATH = DATA_DIR / "exports/000/gaze_positions.csv"
 PUPIL_PATH = DATA_DIR / "exports/000/pupil_positions.csv"
 INFO_JSON_PATH = DATA_DIR / "info.player.json"

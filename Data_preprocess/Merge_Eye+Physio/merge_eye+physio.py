@@ -11,6 +11,48 @@ def convert_pupil_to_system_time(pupil_df, start_synced, start_system):
     pupil_df["end_time_ms"] = ((pupil_df["end_time_sec"] - start_synced) + start_system) * 1000
     return pupil_df
 
+
+def merge_by_time_overlap(features_df, pupil_df):
+    """
+    Merge two dataframes based on overlapping time windows.
+    For each row in features_df, aggregate all overlapping pupil_df rows
+    into a single row (mean for numeric columns, join for non-numeric).
+    """
+
+    merged_rows = []
+
+    # Pre-identify numeric and non-numeric pupil columns
+    pupil_numeric_cols = pupil_df.select_dtypes(include="number").columns
+    pupil_non_numeric_cols = pupil_df.select_dtypes(exclude="number").columns
+
+    for _, phys_row in features_df.iterrows():
+        # Find overlapping pupil rows
+        overlapping = pupil_df[
+            (pupil_df["start_time_ms"] < phys_row["end_time"]) &
+            (pupil_df["end_time_ms"] > phys_row["start_time"])
+        ]
+
+        if not overlapping.empty:
+            # Aggregate numeric columns (mean)
+            aggregated_numeric = overlapping[pupil_numeric_cols].mean()
+
+            # Aggregate non-numeric columns (comma-separated unique values)
+            aggregated_non_numeric = overlapping[pupil_non_numeric_cols].agg(
+                lambda x: ",".join(sorted(set(x.dropna().astype(str))))
+            )
+
+            # Combine physiological row with aggregated pupil data
+            merged_row = pd.concat([phys_row, aggregated_numeric, aggregated_non_numeric])
+        else:
+            # If no overlap, just keep physiological row + NaNs for pupil features
+            empty_numeric = pd.Series([pd.NA] * len(pupil_numeric_cols), index=pupil_numeric_cols)
+            empty_non_numeric = pd.Series([pd.NA] * len(pupil_non_numeric_cols), index=pupil_non_numeric_cols)
+            merged_row = pd.concat([phys_row, empty_numeric, empty_non_numeric])
+
+        merged_rows.append(merged_row)
+
+    return pd.DataFrame(merged_rows)
+'''
 def merge_by_time_overlap(features_df, pupil_df):
     """
     Merge two dataframes based on overlapping time windows.
@@ -33,7 +75,7 @@ def merge_by_time_overlap(features_df, pupil_df):
         return pd.DataFrame(merged_rows)
     else:
         return pd.DataFrame()  # return empty df if no matches
-
+'''
 def process_user(user_id, base_signal_path, base_pupil_path, json_info_path):
     """
     Process one user's data and return merged DataFrame.
