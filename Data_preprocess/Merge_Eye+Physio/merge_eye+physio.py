@@ -106,12 +106,15 @@ def process_user(user_id, base_signal_path, base_pupil_path, json_info_path):
 # Example Usage
 if __name__ == "__main__":
     u_id=int(input("Enter The User ID: "))
+    extention=int(input("Enter The extention ID: "))
     base_signal_path = "/home/rounak/CODE/Low_Engagement_Detection/Data_preprocess/Preprocess_Signals/alluser_normalized_allfeatures.csv"
     base_pupil_path = "/home/rounak/CODE/Low_Engagement_Detection/Data_preprocess"
-    json_info_path ="/mnt/data1/HCI WORK/Low Engagement Detection/Pupil Recordings/User_2_recording/000"
+    # json_info_path =f"/mnt/data1/HCI WORK/Low Engagement Detection/Pupil Recordings/User_{u_id}_recording/00{extention}"
+    json_info_path =f"/mnt/data2/HCI/User_{u_id}_recording/00{extention}"
+
     
     all_merged = []
-    for user_id in range(2,3):  # assuming users 1 to 10
+    for user_id in range(u_id,u_id+1):  # assuming users 1 to 10
         json_info = f"{json_info_path}/info.player.json"
         try:
             merged = process_user(user_id, base_signal_path, base_pupil_path, json_info)
