@@ -317,7 +317,7 @@ def add_normalized_score(ids, video_id):
 
             result = pd.concat([window_data.reset_index(drop=True), score_data], axis=1)
 
-            output_dir = "4_Alldata_window"
+            output_dir = "/home/rounak/CODE/Low_Engagement_Detection/Data_preprocess/Preprocess_Signals/4_Alldata_window"
             os.makedirs(output_dir, exist_ok=True)
             output_file = os.path.join(output_dir, f"{P_id}{v}_final_concatfeatures.csv")
             result.to_csv(output_file, index=False)
@@ -545,7 +545,7 @@ def add_prevwindow(P_id, video_id):
         # Concatenate all user data back into a single DataFrame
         all_users_df = pd.concat(all_users_data, ignore_index=True)
 
-        all_users_df.to_csv('alluser_normalized_allfeatures.csv', index=False)
+        all_users_df.to_csv('/home/rounak/CODE/Low_Engagement_Detection/Data_preprocess/Preprocess_Signals/alluser_normalized_allfeatures.csv.csv', index=False)
 
 
 if __name__ == "__main__":
@@ -558,12 +558,12 @@ if __name__ == "__main__":
     video_id = list(range(1,9))
 
     # signal_preprocessing (ids, video_id)
-    signals_normalization(ids, video_id)
-    # extract_features(ids, video_id)
-    # add_normalized_score(ids,video_id)
-    # annotate_window (ids, video_id)
-    # concat_all_data(P_id, video_id)
-    # add_prevwindow(P_id, video_id)
+    # signals_normalization(ids, video_id)
+    extract_features(ids, video_id)
+    add_normalized_score(ids,video_id)
+    annotate_window (ids, video_id)
+    concat_all_data(P_id, video_id)
+    add_prevwindow(P_id, video_id)
 
 
 
