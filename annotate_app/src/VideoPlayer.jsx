@@ -80,7 +80,8 @@ export default function VideoPlayer() {
   // const orderedList = [vid7, vid0, vid1, vid0, vid2, vid0, vid4, vid0, vid5, vid0, vid6, vid0, vid3, vid0, vid8, vid0];
   // const orderedList = [vid6, vid0, vid8, vid0, vid5, vid0, vid1, vid0, vid3, vid0, vid7, vid0, vid4, vid0, vid2, vid0];
   // const orderedList = [vid1, vid0, vid3, vid0, vid6, vid0, vid8, vid0, vid2, vid0, vid7, vid0, vid5, vid0, vid4, vid0];
-  const orderedList = [vid3, vid0, vid5, vid0, vid8, vid0, vid6, vid0, vid4, vid0, vid1, vid0, vid7, vid0, vid2, vid0];
+  // const orderedList = [vid3, vid0, vid5, vid0, vid8, vid0, vid6, vid0, vid4, vid0, vid1, vid0, vid7, vid0, vid2, vid0];
+  const orderedList = [vid8, vid0, vid2, vid0, vid5, vid0, vid3, vid0, vid7, vid0, vid4, vid0, vid6, vid0, vid1, vid0];
 
 
   const handleVideoEnded = () => {
