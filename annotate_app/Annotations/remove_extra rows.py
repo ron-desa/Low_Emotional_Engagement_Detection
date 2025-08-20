@@ -1,6 +1,9 @@
 import pandas as pd
 import os
-user_name="Aditya_32"
+user_name="soumyajit_40"
+
+del_rows = 1 #number of rows to trim at the end
+
 # File paths
 input_file = f"/home/rounak/CODE/Low_Engagement_Detection/annotate_app/Annotations/{user_name}.csv"
 output_dir = '/home/rounak/CODE/Low_Engagement_Detection/Data_preprocess/Preprocess_Signals/raw_data/Annotations'
@@ -12,11 +15,11 @@ user_number = input("Enter user number for filename (e.g., 1): ")
 df = pd.read_csv(input_file)
 
 # Check if the file has at least 1 rows
-if len(df) < 1:
+if len(df) < del_rows:
     print("The file has fewer than 1 rows. Nothing to export.")
 else:
     # Remove the last 17 rows
-    df_trimmed = df.iloc[:-1]
+    df_trimmed = df.iloc[:-del_rows]
 
     # Construct the output file path
     output_filename = f'user{user_number}_annotations.csv'
