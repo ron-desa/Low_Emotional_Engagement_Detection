@@ -5,4 +5,8 @@ scikit-learn
 pytz
 natsort
 densratio
-
+pyautogui
+flask
+flask-cors
+pyserial
+pyzmq
