@@ -16,7 +16,7 @@ pd.set_option('display.max_columns', None)  # Show all columns
 pd.set_option('display.width', 1000)  # Prevent truncation
 
 # Load dataset
-data = pd.read_csv('/home/rounak/CODE/Third_quadrant_prediction orgnl/pd_ML/MetaData_2.0.csv')
+data = pd.read_csv('/home/rounak/CODE/Low_Engagement_Detection/Data_preprocess/Final_Data_Table/merged_all_1_to_40.csv')
 # video_df= pd.read_csv('/home/rounak/CODE/Third_quadrant_prediction orgnl/pd_ML/video_flag.csv')
 ds = data[['Score', 'GSRmean_persen_diff', 'HRmean_persen_diff', 'valence_acc_video',
            'arousal_acc_video', 'P_id','video_id','video_flag','label','prev_window2']]
