@@ -18,8 +18,9 @@ pd.set_option('display.width', 1000)  # Prevent truncation
 # Load dataset
 data = pd.read_csv('/home/rounak/CODE/Low_Engagement_Detection/Data_preprocess/Final_Data_Table/merged_all_1_to_40.csv')
 # video_df= pd.read_csv('/home/rounak/CODE/Third_quadrant_prediction orgnl/pd_ML/video_flag.csv')
-ds = data[['Score', 'GSRmean_persen_diff', 'HRmean_persen_diff', 'valence_acc_video',
-           'arousal_acc_video', 'P_id','video_id','video_flag','label','prev_window2']]
+cols_to_drop = ["videoID","start_time","end_time","start_time_sec","end_time_sec","num_samples","start_time_ms","end_time_ms","time"]
+
+ds = data.drop(columns=cols_to_drop)
 
 # Define different variations of training splits
 active_splits = [
