@@ -10,6 +10,7 @@ from keras.layers import Dense, LSTM, Dropout
 import csv
 import statistics
 import os
+import sys
 
 folder_path='/home/rounak/CODE/Low_Engagement_Detection/ML/LOSO_RF'
 os.makedirs(folder_path, exist_ok=True)  # Ensure the folder is created
@@ -27,7 +28,14 @@ ds = data.drop(columns=cols_to_drop)
 # Define clusters
 cluster = list(range(1, 41))
     
-threshold = 0.5
+# Get threshold from command-line argument
+if len(sys.argv) > 1:
+    threshold = float(sys.argv[1])
+else:
+    threshold = 0.1  # default if no input given
+
+print(f"Using threshold: {threshold}")
+
 ds_cluster = ds[ds["P_id"].isin(cluster)].copy()
 
 X = ds_cluster.drop(['probe'], axis=1)
