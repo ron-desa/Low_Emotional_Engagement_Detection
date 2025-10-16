@@ -50,6 +50,45 @@ Repository: [Low Emotional Engagement Detection](https://github.com/ron-desa/Low
 
 ---
 
+## Flow Diagram of the Project
+```bash
+┌──────────────────────────────┐      ┌──────────────────────────────┐      ┌──────────────────────────────┐
+│   Pupil Capture (Eye Data)   │      │  Physiological Sensors       │      │    Annotation App (User)     │
+│------------------------------│      │  (Arduino-based Device)      │      │------------------------------│
+│ • Gaze position (x, y)       │      │ • Heart Rate (HR)            │      │ • Valence ratings            │
+│ • Blink, pupil diameter      │      │ • Galvanic Skin Response     │      │ • Arousal ratings            │
+│ • Sampling rate ≈ 250 Hz     │      │ • Sampling rate ≈ 10 Hz      │      │ • Time-stamped user input    │
+└──────────────┬───────────────┘      └──────────────┬───────────────┘      └──────────────┬───────────────┘
+               │                                      │                                      │
+               └──────────────────────┬───────────────┴───────────────┬──────────────────────┘
+                                      ▼                               ▼
+                             ┌────────────────────────────────────────────────────┐
+                             │       Data Synchronization & Fusion Layer          │
+                             │----------------------------------------------------│
+                             │ • Aligns timestamps from all three sources         │
+                             │ • Handles frequency mismatch & latency correction  │
+                             │ • Produces unified multimodal dataset (CSV/JSON)   │
+                             └──────────────────────────┬─────────────────────────┘
+                                                        │
+                                                        ▼
+                                      ┌──────────────────────────────────────────┐
+                                      │     Unified Multimodal Dataset (Output)  │
+                                      │------------------------------------------│
+                                      │ • Synchronized eye, physio, and label data│
+                                      │ • Format: CSV or JSON                    │
+                                      └───────────────────┬──────────────────────┘
+                                                          │
+                                                          ▼
+                                      ┌──────────────────────────────────────────┐
+                                      │     Analysis & Visualization Layer       │
+                                      │------------------------------------------│
+                                      │ • Emotion inference / engagement metrics │
+                                      │ • Visualization via React Frontend       │
+                                      │ • Export for downstream modeling         │
+                                      └──────────────────────────────────────────┘
+```
+
+
 ## Prerequisites
 
 ### Software
