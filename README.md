@@ -163,34 +163,51 @@ A suggested layout (adjust to your repo):
 
 ```
 Low_Emotional_Engagement_Detection/
-├─ frontend/                     # React app (UI)
-│  ├─ src/
-│  │  ├─ components/
-│  │  │  ├─ NavbarComponent.jsx
-│  │  │  └─ ...
-│  │  ├─ pages/
-│  │  │  ├─ UserSelect.jsx
-│  │  │  ├─ VideoPlayer.jsx
-│  │  │  └─ Review.jsx
-│  │  ├─ index.jsx
-│  │  ├─ index.css
-│  │  └─ UserSelect.css
-│  └─ package.json
-│
-├─ backend/                      # Python backend (capture & APIs)
-│  ├─ app.py                     # Flask entrypoint (example)
-│  ├─ config.py                  # reads env vars
-│  └─ utils/                     # serial, pupil, sync helpers
-│
-├─ data/
-│  ├─ raw/                       # incoming files from capture/player/sensors
-│  └─ processed/                 # merged/aligned outputs
-│
-├─ scripts/                      # optional CLI utilities
-├─ notebooks/                    # analysis notebooks (optional)
-├─ requirements.txt
-├─ .env.example
-└─ README.md
+├── annotate_app/
+│   ├── Annotations/
+│   ├── node_modules/
+│   ├── public/
+│   └── src/
+│       ├── assets/
+│       └── videos/
+├── Data_preprocess/
+│   ├── Final_Data_Table/
+│   ├── Merge_Eye+Physio/
+│   │   └── scrap/
+│   ├── plots/
+│   └── Preprocess_Signals/
+│       ├── 1_input_signals/
+│       ├── 2_Normalized_data/
+│       ├── 3_Normalized_window_data/
+│       ├── 4_Alldata_window/
+│       ├── 5_window_annotation/
+│       ├── 6_signal_probe/
+│       ├── raw_data/
+│       └── scores/
+├── Images/
+│   ├── blured_images/
+│   └── Raw_images/
+├── ML/
+│   ├── Active_Learning/
+│   │   ├── 1,2-3,4,5,6-7,8/
+│   │   └── 1,2-7,8-7,8/
+│   ├── LOSO/
+│   ├── LOSO_RF/
+│   ├── Personalised/
+│   ├── Personalised_RF/
+│   └── Re_eval_Al_test_split_median/
+│       ├── 2,3,4,5,6-7,8/
+│       └── 2-3,4,5,6,7,8/
+├── Pupil/
+│   ├── new_file/
+│   │   └── Learning-git-github/
+│   └── __pycache__/
+├── Score_Calculation/
+│   └── __pycache__/
+├── .env.example
+├── .gitignore
+├── README.md
+└── requirements.txt
 ```
 
 ---
