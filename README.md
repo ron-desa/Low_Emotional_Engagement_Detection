@@ -31,7 +31,7 @@ Repository: [Low Emotional Engagement Detection](https://github.com/ron-desa/Low
 
 * **Frontend (React):**
 
-  * Play study videos with `react-player`.
+  * Play videos with `react-player`.
   * UI for **user selection**, **annotations/labels**, and **CSV export**.
   * Optional media recording via `react-media-recorder`.
 * **Backend (Python/Flask):**
@@ -43,7 +43,6 @@ Repository: [Low Emotional Engagement Detection](https://github.com/ron-desa/Low
 
   * Data wrangling with `pandas`, `numpy`.
   * Change detection with `densratio` (relative density ratio).
-  * Clustering (`KMeans`) and evaluation (`silhouette_score`).
   * Plotting with `matplotlib`.
 
 > The stack is **hybrid**: React (Node.js) for UI + Python for capture/processing.
