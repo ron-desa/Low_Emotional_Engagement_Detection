@@ -148,4 +148,58 @@ for user in users:
     # Retrain after completing AL for this user
     model.fit(X_train, y_train)
 
-    # Final predictions on the user’s test-s
+    # Final predictions on the user’s test-set
+    y_pred = (model.predict_proba(X_test)[:, 1] >= 0.5).astype(int)
+
+    # Metrics
+    tp = np.sum((y_pred == 1) & (y_test == 1))
+    fp = np.sum((y_pred == 1) & (y_test == 0))
+    fn = np.sum((y_pred == 0) & (y_test == 1))
+    tn = np.sum((y_pred == 0) & (y_test == 0))
+
+    tpr = tp / (tp + fn) if (tp + fn) > 0 else 0
+    fpr = fp / (fp + tn) if (fp + tn) > 0 else 0
+    f1m = f1_score(y_test, y_pred, average="macro")
+    f1w = f1_score(y_test, y_pred, average="weighted")
+
+    print(f"User {user} → TPR={tpr:.3f}  FPR={fpr:.3f}  F1_macro={f1m:.3f}")
+
+    # Store metrics
+    user_tpr[user] = tpr
+    user_fpr[user] = fpr
+    user_f1_macro[user] = f1m
+    user_f1_weighted[user] = f1w
+
+    # Logging probe count
+    probe_log_rows.append([user, probe_count])
+
+    # Logging predictions
+    for t, p in zip(y_test, y_pred):
+        compare_rows.append([user, t, p])
+
+# =====================================================================
+# 8. SAVE LOGS
+# =====================================================================
+
+pd.DataFrame(probe_log_rows, columns=["user", "probe_count"]).to_csv(PROBE_LOG, index=False)
+pd.DataFrame(compare_rows, columns=["user", "true", "pred"]).to_csv(COMPARE_LOG, index=False)
+
+pd.DataFrame.from_dict(user_tpr, orient="index", columns=["TPR"]).to_csv(SUMMARY_TPR)
+pd.DataFrame.from_dict(user_fpr, orient="index", columns=["FPR"]).to_csv(SUMMARY_FPR)
+pd.DataFrame.from_dict(user_f1_macro, orient="index", columns=["F1_macro"]).to_csv(SUMMARY_F1M)
+pd.DataFrame.from_dict(user_f1_weighted, orient="index", columns=["F1_weighted"]).to_csv(SUMMARY_F1W)
+
+print("\nLogs saved successfully.")
+
+# =====================================================================
+# 9. SAVE FINAL MODEL
+# =====================================================================
+MODEL_PATH = os.path.join(OUTPUT_BASE, "final_physio_active_model.pkl")
+FEATURE_PATH = os.path.join(OUTPUT_BASE, "feature_order.pkl")
+
+joblib.dump(model, MODEL_PATH)
+joblib.dump(FEATURES, FEATURE_PATH)
+
+print("\nSaved final model to:", MODEL_PATH)
+print("Saved feature order to:", FEATURE_PATH)
+print("\nACTIVE LEARNING COMPLETE ✔")
