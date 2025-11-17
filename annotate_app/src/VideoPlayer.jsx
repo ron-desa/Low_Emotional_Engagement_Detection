@@ -55,6 +55,10 @@ export default function VideoPlayer() {
   const [aro, setAro] = useState(5);
 
   const [annotations, setAnnotations] = useState([["time,valence,arousal,videoID"]]);
+  
+  const [predictions, setPredictions] = useState([]); // array of {window_start_ms, window_end_ms, prob, pred}
+  const [videoStartUnixMs, setVideoStartUnixMs] = useState(null);
+  const playerRef = useRef(null); // useRef for ReactPlayer
 
   const { status, startRecording, stopRecording, mediaBlobUrl } =
     useReactMediaRecorder({ video: true, audio: true });
@@ -104,7 +108,8 @@ export default function VideoPlayer() {
     setPlaying(true);
   }
 
- 
+  const [mode, setMode] = useState('collect'); // 'collect' (default) or 'deploy'
+
   const finishUp = () => {
     setShowModal(false);
     setPlaying(false);
@@ -161,6 +166,46 @@ export default function VideoPlayer() {
     // }, LATENCYFORANNOTATIONINMS);
 
   }, [playing, val , aro , currVideo]);
+
+  useEffect(() => {
+    if (mode !== 'deploy') return;
+  
+    let mounted = true;
+    const poll = async () => {
+      try {
+        const res = await fetch('/prediction.json', {cache: "no-store"});
+        if (!res.ok) return;
+        const data = await res.json(); // array of windows
+        if (!mounted) return;
+  
+        setPredictions(data);
+      } catch (e) {
+        // ignore fetch errors while file not present yet
+      }
+    };
+  
+    // initial fetch plus interval
+    poll();
+    const id = setInterval(poll, 1000);
+    return () => { mounted = false; clearInterval(id); };
+  }, [mode]);
+
+  const buildSegments = () => {
+    if (!videoStartUnixMs || !playerRef.current) return [];
+    const duration = playerRef.current.getDuration(); // seconds
+    if (!duration || duration <= 0) return [];
+  
+    // Map each prediction window to [start_pct, end_pct, pred, prob]
+    return predictions.map(p => {
+      const wStartSec = (p.window_start_ms - videoStartUnixMs) / 1000.0;
+      const wEndSec = (p.window_end_ms - videoStartUnixMs) / 1000.0;
+      const startPct = Math.max(0, Math.min(1, wStartSec / duration));
+      const endPct = Math.max(0, Math.min(1, wEndSec / duration));
+      return { startPct, endPct, pred: p.pred, prob: p.prob };
+    }).filter(s => s.endPct > 0 && s.startPct < 1); // keep only overlaps
+  };
+  
+  
 
     
     
@@ -226,6 +271,7 @@ export default function VideoPlayer() {
   //   }
   // };
 
+  const segments = buildSegments();
 
   const handleSubmitCSV = (e) => {
     // console.log(annotations);
@@ -391,8 +437,48 @@ export default function VideoPlayer() {
         </Row>
         <Row className="d-flex justify-content-center align-items-center">
           <Col md={10} lg={10} xs={12}>
-            <ReactPlayer onSeek={handleSeek} onPause={handleShow} url={currVideo} playing={playing} controls light={bits} width={`85%`} height={`auto`} onEnded={handleVideoEnded} />
+            <ReactPlayer 
+              ref={playerRef} 
+              onSeek={handleSeek} 
+              onPause={handleShow} 
+              onPlay={() => {
+                // when video starts playing, record Unix ms start
+                setVideoStartUnixMs(Date.now() - (playerRef.current ? playerRef.current.getCurrentTime()*1000 : 0));
+              }} 
+              url={currVideo} playing={playing} controls light={bits} width={`85%`} height={`auto`} onEnded={handleVideoEnded} />
           </Col>
+
+          <div style={{position: 'relative', height: 12, width: '85%', margin: '0.5rem auto', background: '#eee', borderRadius: 4}}>
+            {segments.map((seg, idx) => {
+              const left = `${seg.startPct*100}%`;
+              const width = `${Math.max(0.2, (seg.endPct - seg.startPct)*100)}%`; // min width to be visible
+              const color = seg.pred === 1 ? 'red' : 'green';
+              return (
+                <div key={idx}
+                    title={`Prob: ${seg.prob.toFixed(2)}`}
+                    style={{
+                      position: 'absolute',
+                      left,
+                      width,
+                      top: 0,
+                      bottom: 0,
+                      background: color,
+                      opacity: 0.7,
+                      borderRadius: 2
+                    }} />
+              )
+            })}
+            {/* moving playhead */}
+            <div style={{
+              position: 'absolute',
+              left: `${(playerRef.current ? playerRef.current.getCurrentTime()/ (playerRef.current.getDuration() || 1) : 0) * 100}%`,
+              width: 2,
+              top: 0,
+              bottom: 0,
+              background: '#000',
+              transform: 'translateX(-1px)'
+            }}/>
+          </div>
         </Row>
 
 
@@ -402,6 +488,10 @@ export default function VideoPlayer() {
             <Button variant="primary" onClick={handleSubmitCSV} style={{ width: '200px', fontSize: '16px' }}>
               Download CSV of Annotations 
             </Button>
+            <Button variant="secondary" onClick={() => setMode(mode === 'collect' ? 'deploy' : 'collect')}>
+              Switch to {mode === 'collect' ? 'Deployment' : 'Collection'} UI
+            </Button>
+
           {/* </CSVLink> */}
           </div>
         </Row>
