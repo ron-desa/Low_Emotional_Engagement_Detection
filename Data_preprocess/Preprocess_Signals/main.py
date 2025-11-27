@@ -12,12 +12,12 @@ def get_path(relative_path):
 def ensure_directories():
     base_path = "/home/rounak/CODE/Low_Engagement_Detection/Data_preprocess/Preprocess_Signals/"
     required_dirs = [
-        "1_input_signals",
-        "2_Normalized_data",
-        "3_Normalized_window_data",
-        "4_Alldata_window",
-        "5_window_annotation",
-        "6_signal_probe"
+        "1_input_signals_",
+        "2_Normalized_data_",
+        "3_Normalized_window_data_",
+        "4_Alldata_window_",
+        "5_window_annotation_",
+        "6_signal_probe_"
     ]
     for d in required_dirs:
         os.makedirs(os.path.join(base_path, d), exist_ok=True)
@@ -88,7 +88,7 @@ def signal_preprocessing (ids, video_id):
                new_data["video_id"] = str(v)
 
             #    new_data.to_csv("1_input_signals/"+ str(id)+str(v)+ ".csv")
-               new_data.to_csv(get_path(f"1_input_signals/{id}{v}.csv"))
+               new_data.to_csv(get_path(f"1_input_signals_/{id}{v}.csv"))
 
 import pandas as pd
 import os
@@ -102,7 +102,7 @@ def signals_normalization(ids, video_id):
 
         for v in video_id:
             # Load and normalize signals
-            signal_file = f"/home/rounak/CODE/Low_Engagement_Detection/Data_preprocess/Preprocess_Signals/1_input_signals/{id}{v}.csv"
+            signal_file = f"/home/rounak/CODE/Low_Engagement_Detection/Data_preprocess/Preprocess_Signals/1_input_signals_/{id}{v}.csv"
 
             ds = pd.read_csv(signal_file)
             data = ds[["Time_series", "GSR", "HR", "timestamp", "subject", "video_id"]]
@@ -135,7 +135,7 @@ def signals_normalization(ids, video_id):
 
         # Convert to DataFrame and save as CSV
         dataset_normalized = pd.DataFrame(dict_data)
-        output_dir = "/home/rounak/CODE/Low_Engagement_Detection/Data_preprocess/Preprocess_Signals/2_Normalized_data"
+        output_dir = "/home/rounak/CODE/Low_Engagement_Detection/Data_preprocess/Preprocess_Signals/2_Normalized_data_"
         os.makedirs(output_dir, exist_ok=True)
         output_file = os.path.join(output_dir, f"{p_id}.normalized.csv")
 
@@ -196,7 +196,7 @@ def extract_features(ids, video_id):
 
         # 🧠 Process features for each video
         for v in video_id:
-            temp_data = pd.read_csv(f"/home/rounak/CODE/Low_Engagement_Detection/Data_preprocess/Preprocess_Signals/2_Normalized_data/{P_id}.normalized.csv")
+            temp_data = pd.read_csv(f"/home/rounak/CODE/Low_Engagement_Detection/Data_preprocess/Preprocess_Signals/2_Normalized_data_/{P_id}.normalized.csv")
             temp_data["video_id"] = temp_data["video_id"].astype(int)
             original_data = temp_data[temp_data["video_id"] == v]
             data = original_data[['GSR', 'HR']].to_numpy()
@@ -267,7 +267,7 @@ def extract_features(ids, video_id):
             new_window["P_id"] = P_id
             new_window["video_id"] = v
 
-            save_path = f"/home/rounak/CODE/Low_Engagement_Detection/Data_preprocess/Preprocess_Signals/3_Normalized_window_data/{P_id}{v}_PS.csv"
+            save_path = f"/home/rounak/CODE/Low_Engagement_Detection/Data_preprocess/Preprocess_Signals/3_Normalized_window_data_/{P_id}{v}_PS.csv"
             new_window.to_csv(save_path, index=False)
             print(f"✅ Saved features for User {id}, Video {v} → Rows: {len(new_window)}", file=debug_file)
 
@@ -305,7 +305,7 @@ def add_normalized_score(ids, video_id):
 
         # Now attach scores back to window files
         for v in video_id:
-            window_data_file = f"/home/rounak/CODE/Low_Engagement_Detection/Data_preprocess/Preprocess_Signals/3_Normalized_window_data/{P_id}{v}_PS.csv"
+            window_data_file = f"/home/rounak/CODE/Low_Engagement_Detection/Data_preprocess/Preprocess_Signals/3_Normalized_window_data_/{P_id}{v}_PS.csv"
             window_data = pd.read_csv(window_data_file)
 
             print(f"Processing ID {P_id}, User {id}, Video {v}",file=debug_file)
@@ -317,7 +317,7 @@ def add_normalized_score(ids, video_id):
 
             result = pd.concat([window_data.reset_index(drop=True), score_data], axis=1)
 
-            output_dir = "/home/rounak/CODE/Low_Engagement_Detection/Data_preprocess/Preprocess_Signals/4_Alldata_window"
+            output_dir = "/home/rounak/CODE/Low_Engagement_Detection/Data_preprocess/Preprocess_Signals/4_Alldata_window_"
             os.makedirs(output_dir, exist_ok=True)
             output_file = os.path.join(output_dir, f"{P_id}{v}_final_concatfeatures.csv")
             result.to_csv(output_file, index=False)
@@ -464,7 +464,7 @@ def annotate_window(ids, video_id):
 
 
             # Optionally, save the result to a CSV file
-            window_means_df.to_csv("/home/rounak/CODE/Low_Engagement_Detection/Data_preprocess/Preprocess_Signals/5_window_annotation/"+str(P_id)+str(v)+"_annotation.csv", index=False)
+            window_means_df.to_csv("/home/rounak/CODE/Low_Engagement_Detection/Data_preprocess/Preprocess_Signals/5_window_annotation_/"+str(P_id)+str(v)+"_annotation.csv", index=False)
 
 
 def concat_all_data(P_id, video_id):
@@ -473,8 +473,8 @@ def concat_all_data(P_id, video_id):
             # File paths for annotation and signal data
             print("id",id)
             print("Video", v)
-            annotation_path = "/home/rounak/CODE/Low_Engagement_Detection/Data_preprocess/Preprocess_Signals/5_window_annotation/" + str(id) + str(v) + "_annotation.csv"
-            signals_path = "4_Alldata_window/"+ str(id) + str(v)+"_final_concatfeatures.csv"
+            annotation_path = "/home/rounak/CODE/Low_Engagement_Detection/Data_preprocess/Preprocess_Signals/5_window_annotation_/" + str(id) + str(v) + "_annotation.csv"
+            signals_path = "4_Alldata_window_/"+ str(id) + str(v)+"_final_concatfeatures.csv"
 
             # Load the data
             annotation = pd.read_csv(annotation_path)
@@ -491,14 +491,14 @@ def concat_all_data(P_id, video_id):
             print(concatenated_data.head())  # Print first few rows for verification
 
             # Save the concatenated result (optional)
-            concatenated_data.to_csv(f"/home/rounak/CODE/Low_Engagement_Detection/Data_preprocess/Preprocess_Signals/6_signal_probe/concatenated_data_{id}_{v}.csv", index=False)
+            concatenated_data.to_csv(f"/home/rounak/CODE/Low_Engagement_Detection/Data_preprocess/Preprocess_Signals/6_signal_probe_/concatenated_data_{id}_{v}.csv", index=False)
 
     all_dataframes = []
     import os
     for id in P_id:
         for v in video_id:
             # Construct the filename for the current concatenated file
-            file_path = f"/home/rounak/CODE/Low_Engagement_Detection/Data_preprocess/Preprocess_Signals/6_signal_probe/concatenated_data_{id}_{v}.csv"
+            file_path = f"/home/rounak/CODE/Low_Engagement_Detection/Data_preprocess/Preprocess_Signals/6_signal_probe_/concatenated_data_{id}_{v}.csv"
 
             # Check if the file exists
             if os.path.exists(file_path):
@@ -512,15 +512,15 @@ def concat_all_data(P_id, video_id):
     combined_df = pd.concat(all_dataframes, axis=0, ignore_index=True)
 
     # Save the final combined dataframe to a single CSV file
-    combined_df.to_csv("42_user_wise_normalized_features.csv", index=False)
+    combined_df.to_csv("42_user_wise_normalized_features____.csv", index=False)
 
     # Print a message after saving the file
-    print("All files have been concatenated and saved into '42_mid__userwise_valarou_data.csv'.")
+    print("All files have been concatenated and saved into '42_user_wise_normalized_features____.csv'.")
 
 
 def add_prevwindow(P_id, video_id):
         all_users_data = []
-        ds = pd.read_csv('42_user_wise_normalized_features.csv')
+        ds = pd.read_csv('42_user_wise_normalized_features____.csv')
 
         for s in P_id:
             for v in video_id:
@@ -545,7 +545,7 @@ def add_prevwindow(P_id, video_id):
         # Concatenate all user data back into a single DataFrame
         all_users_df = pd.concat(all_users_data, ignore_index=True)
 
-        all_users_df.to_csv('/home/rounak/CODE/Low_Engagement_Detection/Data_preprocess/Preprocess_Signals/alluser_normalized_allfeatures_.csv', index=False)
+        all_users_df.to_csv('/home/rounak/CODE/Low_Engagement_Detection/Data_preprocess/Preprocess_Signals/alluser_normalized_allfeatures______.csv', index=False)
 
 
 if __name__ == "__main__":
@@ -557,12 +557,12 @@ if __name__ == "__main__":
     # P_id = list(range(1,43))
     video_id = list(range(1,9))
 
-    # signal_preprocessing (ids, video_id)
-    # signals_normalization(ids, video_id)
-    # extract_features(ids, video_id)
-    # add_normalized_score(ids,video_id)
-    # annotate_window (ids, video_id)
-    # concat_all_data(P_id, video_id)
+    signal_preprocessing (ids, video_id)
+    signals_normalization(ids, video_id)
+    extract_features(ids, video_id)
+    add_normalized_score(ids,video_id)
+    annotate_window (ids, video_id)
+    concat_all_data(P_id, video_id)
     add_prevwindow(P_id, video_id)
 
 
