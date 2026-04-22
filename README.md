@@ -49,6 +49,16 @@ Repository: [Low Emotional Engagement Detection](https://github.com/ron-desa/Low
 
 ---
 
+## System Pipeline Diagram
+
+<p align="center">
+  <img src="Images/README/pipeline.jpg" alt="Pipeline Diagram" width="900"/>
+</p>
+
+<p align="center">
+  <em>Low Emotional Engagement Detection Pipeline using Pupil Tracking and Physiological Signals</em>
+</p>
+
 ## Flow Diagram of the Project
 ```bash
 ┌──────────────────────────────┐      ┌──────────────────────────────┐      ┌──────────────────────────────┐
@@ -211,4 +221,4 @@ Low_Emotional_Engagement_Detection/
 
 ---
 
-(…rest of README unchanged …)
+
