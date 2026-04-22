@@ -1,0 +1,2 @@
+start_time_sec,end_time_sec,num_samples,pupil_diameter_mean,pupil_diameter_std,confidence_x_mean,confidence_y_mean,blink_count,gaze_movement_mean,gaze_movement_std
+4.075473148068,9.075473148068,499784,763383.9220148997,276609297.9610258,0.9244042338479667,0.9240882457180505,7927,100.88014771760658,5650.573392212274

@@ -1,0 +1,67 @@
+BEGIN:VCALENDAR
+VERSION:2.0
+PRODID:ics.py - http://git.io/lLljaA
+BEGIN:VEVENT
+DESCRIPTION:Literature review\, problem definition\, and use case finalization
+DTEND:20240623T000000Z
+DTSTART:20240618T000000Z
+SUMMARY:Phase: Foundation & Scoping
+UID:6939f65b-3ace-4b5c-acf4-f810f3b2543b@6939.org
+END:VEVENT
+BEGIN:VEVENT
+DESCRIPTION:Deploy model and run final user study
+DTEND:20240926T000000Z
+DTSTART:20240906T000000Z
+SUMMARY:Phase: Deployment & Final User Study
+UID:a17cd33a-ce63-4531-801e-6748dfe748aa@a17c.org
+END:VEVENT
+BEGIN:VEVENT
+DESCRIPTION:Small group data collection and variability analysis
+DTEND:20240711T000000Z
+DTSTART:20240706T000000Z
+SUMMARY:Phase: Multi-user (3–4) Data Collection
+UID:1b6d70f0-3a12-419e-a665-cc12dda89a8c@1b6d.org
+END:VEVENT
+BEGIN:VEVENT
+DESCRIPTION:Pilot data collection and preprocessing pipeline
+DTEND:20240706T000000Z
+DTSTART:20240629T000000Z
+SUMMARY:Phase: Pilot Data Collection & Preprocessing
+UID:10ebaa63-2f35-4af0-a9c8-fe4e6ccde22a@10eb.org
+END:VEVENT
+BEGIN:VEVENT
+DESCRIPTION:Full-scale data collection and aggregation
+DTEND:20240811T000000Z
+DTSTART:20240719T000000Z
+SUMMARY:Phase: Scaled Data Collection (20 Users)
+UID:7c7132c3-0dc4-4812-b7eb-509e40b2346e@7c71.org
+END:VEVENT
+BEGIN:VEVENT
+DESCRIPTION:Train and evaluate baseline models
+DTEND:20240719T000000Z
+DTSTART:20240711T000000Z
+SUMMARY:Phase: Baseline Model Training & Evaluation
+UID:24e7d49b-9093-46db-8c51-17a71b71be70@24e7.org
+END:VEVENT
+BEGIN:VEVENT
+DESCRIPTION:Select video stimuli and define baseline models
+DTEND:20240626T000000Z
+DTSTART:20240623T000000Z
+SUMMARY:Phase: Stimuli & Baselines
+UID:bb5d5730-d153-4847-9363-7f722f8b9d0c@bb5d.org
+END:VEVENT
+BEGIN:VEVENT
+DESCRIPTION:Build and test data collection web interface
+DTEND:20240629T000000Z
+DTSTART:20240626T000000Z
+SUMMARY:Phase: Web Platform Finalization
+UID:0ae97979-0331-4924-9cda-09c2d2b374e2@0ae9.org
+END:VEVENT
+BEGIN:VEVENT
+DESCRIPTION:Develop and evaluate novel model
+DTEND:20240906T000000Z
+DTSTART:20240811T000000Z
+SUMMARY:Phase: Novel Model Development & Evaluation
+UID:cd4bac86-c49c-4721-a2d3-d22a0c8fd3ff@cd4b.org
+END:VEVENT
+END:VCALENDAR

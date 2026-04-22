@@ -1,0 +1,40 @@
+# Ignore everything by default
+*
+
+# But not these file types and folder structure
+!*/
+!*.py
+!*.html
+!*.css
+!*.js
+!*.jsx
+!*.json
+!requirements.txt
+!**/*.py
+!**/*.html
+!**/*.css
+!**/*.js
+!**/*.jsx
+!**/*.json
+!**/*.jpg
+!**/*.png
+!**/*.pkl
+
+
+# Explicitly ignore common unwanted files/folders
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+*.swp
+.DS_Store
+*.log
+*.sqlite3
+*.db
+.env
+.venv/
+env/
+venv/
+.ipynb_checkpoints/
+node_modules/
+.project

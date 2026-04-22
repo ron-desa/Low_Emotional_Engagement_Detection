@@ -1,0 +1,35 @@
+const int LED=13;
+const int GSR=A0;
+const int PULSE_SENSOR_PIN=A1; 
+int sensorValue;
+int Signal_HR;
+int Threshold = 550;       // Determine which Signal to "count as a beat" and which to ignore.
+
+
+void setup()
+{
+Serial.begin(9600);
+pinMode(LED,OUTPUT);
+digitalWrite(LED,LOW);
+delay(1000);
+}
+
+void loop()
+{
+int temp;
+float conductivevoltage;
+sensorValue=analogRead(GSR); // get gsr voltage
+conductivevoltage = sensorValue*(5.0/1023.0);
+
+//delay(100);
+
+Signal_HR = analogRead(PULSE_SENSOR_PIN); 
+
+//Serial.print("Current Time=");
+Serial.print(millis());
+Serial.print(",");
+Serial.print(sensorValue);
+Serial.print(",");
+Serial.println(Signal_HR);
+delay(1);
+}
